@@ -1,0 +1,59 @@
+
+  @color2:#5C5470;
+  @color3:#635666;
+  @color4:#839AA8;
+
+  @color6:#FFDEB4;
+  @color7:#FFB4B4;
+  @color8:#B2A4FF;
+
+  @AsideMenu-button-hover:#484258;
+  @AsideMenu:#2A2438;
+  @Header:#352F44;
+
+  @text-color:#DBD8E3;
+
+  // @AsideMenu:#94B49F;
+  // @Header:#A2B5BB;
+
+  @format:{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 550;
+    font-size: 20px;
+  };
+  @primary-btn-style:{
+    background-color: @Header;
+    border: 3px solid #958da8;
+    transition: all 0.3s ease;
+    &:hover {
+      opacity: .7;
+    }
+  }
+  @dialog:{
+    border-radius: 10px;
+  }
+  .el-button:focus{
+    
+  }
+  .el-popper {
+    border: 0px !important;
+    top: 30px !important;
+    .el-menu--horizontal{ 
+      border: 0px;
+      
+      .el-menu--popup {
+        padding: 0px;
+        min-width: 150px;
+        .el-menu-item {
+          background-color: @text-color;
+          color: @Header;
+          &:hover {
+            background-color:@Header;
+          color: @text-color;
+          }
+        }
+      }
+    }
+  }

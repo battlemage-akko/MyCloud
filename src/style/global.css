@@ -1,0 +1,19 @@
+.el-popper {
+  border: 0px !important;
+  top: 30px !important;
+}
+.el-popper .el-menu--horizontal {
+  border: 0px;
+}
+.el-popper .el-menu--horizontal .el-menu--popup {
+  padding: 0px;
+  min-width: 150px;
+}
+.el-popper .el-menu--horizontal .el-menu--popup .el-menu-item {
+  background-color: #DBD8E3;
+  color: #352F44;
+}
+.el-popper .el-menu--horizontal .el-menu--popup .el-menu-item:hover {
+  background-color: #352F44;
+  color: #DBD8E3;
+}
