@@ -128,7 +128,7 @@ watch(chosenFiles, (newValue, oldValue) => {
         // console.log(props.fileTree[newValue[0]])
       }
       else {
-        getFileInfo('文件大小为：'+bytesToSize(parseInt(props.fileTree[newValue[0]]?.Size)))
+        getFileInfo('文件大小：'+bytesToSize(parseInt(props.fileTree[newValue[0]]?.Size)))
       }
     }
     else {
