@@ -1,4 +1,5 @@
 <script setup>
+import fileTitle from "./fileTitle.vue"
 import { reactive, watch, ref, onMounted } from "vue";
 import { Search, FolderAdd, Download,Picture,VideoPlay,Folder,Back,QuestionFilled, Upload } from "@element-plus/icons-vue";
 import { useRoute } from "vue-router";
@@ -121,7 +122,7 @@ watch(keyword, (newValue, oldValue) => {
 watch(chosenFiles, (newValue, oldValue) => {
   if(newValue){
     if(newValue.length > 1){
-      getFileInfo('已选中'+newValue.length+'项目')
+      getFileInfo('已选中 '+newValue.length+' 项目')
     }
     else if(newValue.length === 1) {
       if (props.fileTree[newValue[0]]?.type === 'dir') {
@@ -243,7 +244,7 @@ watch(chooseAll, (newValue, oldValue) => {
           class="image"
         /> -->
           <div class="fileTitleHolder">
-            <div class="fileTitle">{{ item.name }}</div>
+            <fileTitle :value="item.name" :keyword="keyword"/>
           </div>
         </el-card></el-col
       >
@@ -307,18 +308,6 @@ watch(chooseAll, (newValue, oldValue) => {
       .image {
         width: 100px;
         height: 100px;
-      }
-      .fileTitleHolder {
-        .fileTitle {
-          user-select: none;
-          text-align: center;
-          width: 100%;
-          height: 100%;
-          font-size: 12px;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
       }
     }
     }
