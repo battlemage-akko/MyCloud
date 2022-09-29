@@ -1,18 +1,22 @@
 <script setup>
-import { watch } from "vue";
+import { watch, ref } from "vue";
 const props = defineProps({
   value: String,
   keyword: String,
 });
-watch(props.keyword, (newValue, oldValue) => {
-  console.log(newValue);
-});
+const title = ref(props.value);
 </script>
 
 <template>
-  <div class="fileTitle">
-    {{ props.value }}
-  </div>
+  <div
+    class="fileTitle"
+    v-html="props.keyword?
+      title.replace(
+        new RegExp(props.keyword),
+        `<span style='border:1px solid #635666;padding:2px;border-radius:3px;background:rgba(53, 47, 68, .2)'>`+props.keyword+`</span>`
+      ):`<span>`+title+`</span>`
+    "
+  ></div>
 </template>
 
 <style lang="less" scoped>
@@ -25,5 +29,8 @@ watch(props.keyword, (newValue, oldValue) => {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  .markWord {
+    background-color: red;
+  }
 }
 </style>

@@ -112,11 +112,15 @@ watch(keyword, (newValue, oldValue) => {
     filteredFiles.length = 0 
   }
   else {
+    const reg = new RegExp(keyword.value)
     Object.keys(props.fileTree).forEach((key)=> {
       if(props.fileTree[key].name.includes(newValue)){
         filteredFiles.push(props.fileTree[key])
       }
     })
+    // filteredFiles.map((item) => {
+    //   item.name = item.name.replace(reg,`<span class='mark'>${keyword.value}</span>`)
+    // })
   }
 })
 watch(chosenFiles, (newValue, oldValue) => {
