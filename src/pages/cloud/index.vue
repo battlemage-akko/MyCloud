@@ -71,7 +71,7 @@ const getFiles = async (url) => {
     },
     await function (err, data) {
       let back = false;
-      let dirs = data.CommonPrefixes;
+      let dirs = data?.CommonPrefixes;
       for (let item of dirs) {
         item.type = "dir";
         item.url = item.Prefix;

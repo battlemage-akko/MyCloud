@@ -112,15 +112,11 @@ watch(keyword, (newValue, oldValue) => {
     filteredFiles.length = 0 
   }
   else {
-    const reg = new RegExp(keyword.value)
     Object.keys(props.fileTree).forEach((key)=> {
       if(props.fileTree[key].name.includes(newValue)){
         filteredFiles.push(props.fileTree[key])
       }
     })
-    // filteredFiles.map((item) => {
-    //   item.name = item.name.replace(reg,`<span class='mark'>${keyword.value}</span>`)
-    // })
   }
 })
 watch(chosenFiles, (newValue, oldValue) => {
@@ -176,7 +172,6 @@ watch(chooseAll, (newValue, oldValue) => {
       <div style="display:flex;flex-wrap: nowrap;overflow: hidden;height:50px">
         <el-button
           color="#352F44"
-          :dark="isDark"
           style="margin: 10px 5px"
           :icon="Download"
           :disabled="chosenFiles.length <= 0"
@@ -184,7 +179,6 @@ watch(chooseAll, (newValue, oldValue) => {
         >
         <el-button
           color="#352F44"
-          :dark="isDark"
           style="margin: 10px 5px"
           :icon="Upload"
           :disabled="loading"
@@ -192,7 +186,6 @@ watch(chooseAll, (newValue, oldValue) => {
         >
         <el-button
           color="#352F44"
-          :dark="isDark"
           style="margin: 10px 5px"
           :icon="FolderAdd"
           @click="createDirHandler(true,false)"

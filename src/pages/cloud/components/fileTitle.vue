@@ -13,7 +13,7 @@ const title = ref(props.value);
     v-html="props.keyword?
       title.replace(
         new RegExp(props.keyword),
-        `<span style='border:1px solid #635666;padding:2px;border-radius:3px;background:rgba(53, 47, 68, .2)'>`+props.keyword+`</span>`
+        `<span style='margin:0px 1px;border:1px solid #635666;padding:2px;border-radius:3px;background:rgba(53, 47, 68, .2)'>`+props.keyword+`</span>`
       ):`<span>`+title+`</span>`
     "
   ></div>
