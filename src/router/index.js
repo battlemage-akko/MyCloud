@@ -8,6 +8,8 @@ import Default from '@/pages/default/index.vue'
 import Cloud from '@/pages/cloud/index.vue'
 import Preview from '@/pages/utils/previewWindow/index.vue'
 import Download from '@/pages/download/index.vue'
+import Spider from '@/pages/spider/index.vue'
+import Upload from '@/pages/utils/uploadWindow/index.vue'
 const routes = [
   {
     path:'/',
@@ -33,6 +35,11 @@ const routes = [
             name: 'download',
             component: Download,
           },
+          {
+            path: 'spider',
+            name: 'spider',
+            component: Spider,
+          },
         ]
       },
     ]
@@ -46,6 +53,11 @@ const routes = [
       name: 'previewFile',
       component: Preview,
     }]
+  },
+  {
+    path: '/upload',
+    name: 'upload',
+    component: Upload
   },
 ]
 

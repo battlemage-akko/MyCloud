@@ -7,6 +7,7 @@ import {
   Location,
   Setting,
   Cloudy,
+  Guide
 } from "@element-plus/icons-vue";
 import { indexOf } from "lodash";
 const router = useRouter();
@@ -14,7 +15,8 @@ const defaultAcitve = ref("default")
 let navs = [
   { path: "/home/default", text: "default", icon: "Menu", active: false },
   { path: "/home/cloud/repo", text: "cdn", icon: "Cloudy", active: false },
-  { path: "/home/download", text: "download", icon: "Download", active: false }
+  { path: "/home/download", text: "download", icon: "Download", active: false },
+  { path: "/home/spider", text: "spider", icon: "Guide", active: false },
 ];
 watch(
   () => router.currentRoute.value.path,

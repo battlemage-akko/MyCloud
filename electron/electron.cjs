@@ -9,37 +9,20 @@ const isDev = process.env.IS_DEV == 'true' ? true : false;
 // const remote = require('electron');
 const Remote = require("@electron/remote/main");
 const { map } = require('lodash');
+const { config } = require('process');
 Remote.initialize();
 const host = 'http://localhost:3000'
 
 const BrowserWindowsMap = new Map()
 let mainWindow
 const iconName = path.join(__dirname, 'flower.png');
-function preview(url,path) {
-    if (BrowserWindowsMap.has(path)) {
-      BrowserWindowsMap.get(path).focus() // 存在 则聚焦
+
+function openNewWindows(url,path_name,config) {
+    if (BrowserWindowsMap.has(path_name)) {
+      BrowserWindowsMap.get(path_name).focus() // 存在 则聚焦
       return
     }
-    const newWin = new BrowserWindow({
-      maxHeight:1080,
-      maxWidth:1920,
-      minWidth: 800,
-      minHeight: 600,
-      frame: false, //是否显示边缘框
-      fullscreen: false, //是否全屏显示
-      autoHideMenuBar: true,
-      webPreferences: {
-        // preload: path.join(__dirname, 'preload.cjs'),
-        nodeIntegration: true, // 是否集成 Nodejs
-        contextIsolation: false,
-        nodeIntegrationInWorker: true,
-        enableRemoteModule: true,
-        // 关闭同源策略 解决跨域
-        webSecurity: true,
-        webviewTag: true
-      },
-      show: false,
-    })
+    const newWin = new BrowserWindow(config)
     newWin.loadURL(url)
     Remote.enable(newWin.webContents);
  // 此处写 你要打开的路由地址
@@ -47,9 +30,9 @@ function preview(url,path) {
       newWin.show();
     })
     newWin.on('close', () => {
-      BrowserWindowsMap?.delete(path)
+      BrowserWindowsMap?.delete(path_name)
     })
-    BrowserWindowsMap.set(path, newWin)
+    BrowserWindowsMap.set(path_name, newWin)
     console.log(BrowserWindowsMap)
 }
 function createWindow() {
@@ -137,11 +120,32 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
   ipcMain.on('preview', function (event, data) {
-    const path = host + '/preview/file/'+ JSON.parse(data).type +'?path=' + JSON.parse(data).path
-    preview(path,JSON.parse(data).path)
+    const url = host + '/preview/file/'+ JSON.parse(data).type +'?path=' + JSON.parse(data).path
+    const config = {
+      maxHeight:1080,
+      maxWidth:1920,
+      minWidth: 800,
+      minHeight: 600,
+      frame: false, //是否显示边缘框
+      fullscreen: false, //是否全屏显示
+      autoHideMenuBar: true,
+      webPreferences: {
+        // preload: path.join(__dirname, 'preload.cjs'),
+        nodeIntegration: true, // 是否集成 Nodejs
+        contextIsolation: false,
+        nodeIntegrationInWorker: true,
+        enableRemoteModule: true,
+        // 关闭同源策略 解决跨域
+        webSecurity: true,
+        webviewTag: true
+      },
+      show: false,
+    }
+    openNewWindows(url,JSON.parse(data).path,config)
   })
-  ipcMain.on('previewEvent', function (event, data) {
+  ipcMain.on('assistantWindowEvent', function (event, data) {
     data = JSON.parse(data)
+    console.log(data)
     switch (data.type) {
       case 0: //关闭窗口
         BrowserWindowsMap.get(data.id).close()
@@ -149,7 +153,7 @@ app.whenReady().then(() => {
       case 1: //隐藏窗口
         BrowserWindowsMap.get(data.id).minimize('')
         break;
-      case 2:
+      case 2: //最大化最小化
         if (BrowserWindowsMap.get(data.id).isMaximized()) { 
           BrowserWindowsMap.get(data.id).restore(); 
         } else {
@@ -160,6 +164,33 @@ app.whenReady().then(() => {
         break;
     }
   })
+  ipcMain.on('uploadOrDownload',function (event,data) { 
+    const path = '/' + JSON.parse(data).path 
+    const url = host + '/' + 'upload?path=' + path
+    const config = {
+      maxHeight:600,
+      maxWidth:500,
+      height:500,
+      width:400,
+      minWidth: 400,
+      minHeight: 500,
+      frame: false, //是否显示边缘框
+      fullscreen: false, //是否全屏显示
+      autoHideMenuBar: true,
+      webPreferences: {
+        // preload: path.join(__dirname, 'preload.cjs'),
+        nodeIntegration: true, // 是否集成 Nodejs
+        contextIsolation: false,
+        nodeIntegrationInWorker: true,
+        enableRemoteModule: true,
+        // 关闭同源策略 解决跨域
+        webSecurity: true,
+        webviewTag: true
+      },
+      show: false,
+    }
+    openNewWindows(url, JSON.parse(data).behavior + '_' + path, config)
+   })
   ipcMain.on('closeSubWindow',function (event, data) {
     console.log(data)
   })

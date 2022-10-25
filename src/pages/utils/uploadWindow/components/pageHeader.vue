@@ -30,19 +30,11 @@ const previewEventHandle = (type) => {
       <img src="@/assets/flower_white.png" alt="" class="logo" />
     </div>
     <div class="dragArea">
-      {{ route.query.path }}
+      
     </div>
     <ul class="btns">
       <li @click="previewEventHandle(1)">
         <el-icon><Minus /></el-icon>
-      </li>
-      <li @click="previewEventHandle(2)">
-        <el-icon v-if="isMaximized">
-          <CopyDocument />
-        </el-icon>
-        <el-icon v-if="!isMaximized">
-          <Crop />
-        </el-icon>
       </li>
       <li @click="previewEventHandle(0)">
         <el-icon>
