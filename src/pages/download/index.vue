@@ -4,7 +4,9 @@
 
 <template>
      <el-container class="container">
-      <el-aside class="aside">Aside</el-aside>
+      <el-aside class="aside">
+        
+      </el-aside>
       <el-main class="main">Main</el-main>
     </el-container>
 </template>

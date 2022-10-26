@@ -136,14 +136,6 @@ const previewEventHandle = (type) => {
       list-style: none;
       color: @text-color;
       transition: all 0.3s ease;
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.3);
-      }
-    }
-    li:last-child {
-      &:hover {
-        background-color: rgba(255, 0, 0, 0.7);
-      }
     }
   }
 }
