@@ -1,18 +1,55 @@
 <script setup>
 import Menu from "./components/asideMenu.vue";
 import Title from "./components/header.vue";
+import { ElNotification } from 'element-plus'
 import { test } from "@/service/api";
 import Setting from "@/components/setting.vue";
 import { ref } from "vue";
 import isElectron from 'is-electron';
 import { useStore } from "vuex";
+import electron from 'electron';
+import { getCurrentWebContents } from "@electron/remote";
+const webContent = getCurrentWebContents();
+
+class downloadQueue {
+  
+}
+const globalTips = (message,type) => {
+  ElNotification({
+    customClass: 'tips',
+    message: message,
+    position: 'bottom-right',
+  })
+}
+// 200 添加下载文件成功
+// 300 文件列表为空
+electron.ipcRenderer.on('upload',(event, arg) => {
+  const tmp = JSON.parse(arg)
+  if (tmp.length === 0){
+    electron.ipcRenderer.sendTo(
+      event.senderId,
+      "uploadResponse",
+      300
+    );
+  }
+  else {
+    electron.ipcRenderer.sendTo(
+      event.senderId,
+      "uploadResponse",
+      200
+    );
+    globalTips('添加 '+ tmp.length +' 个下载任务',1)
+  }
+});
 const store = useStore();
+store.commit('setMainWindowId',webContent.id)
+console.log(store.state)
+
 const COS = require("cos-nodejs-sdk-v5");
 const cos = new COS({
   SecretId: store.state.cloud.SecretId,
   SecretKey: store.state.cloud.SecretKey,
 });
-console.log(isElectron());
 const isCollapse = ref(false);
 const settingVisible = ref(false);
 const handleSettingClose = () => {
@@ -51,7 +88,7 @@ const noticeHandle = () => {
         </div>
       </el-aside>
       <el-container class="Container">
-        <router-view :cos=cos />
+        <router-view :cos=cos :store=store />
       </el-container>
     </el-container>
     <el-container class="settingContainer">

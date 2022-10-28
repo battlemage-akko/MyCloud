@@ -12,6 +12,7 @@ const store = createStore({
   state: {
     windows: {
       maximize: false,
+      id:null,
     },
     cloud: {
       cdn: 'https://cdn.lili-secretbase.com/',
@@ -21,10 +22,22 @@ const store = createStore({
       Region: "ap-nanjing",
       url: '',
       urlSplit: [],
-    }
+      doneList:[],
+      failList:[],
+      _Queue: [],
+    },
+
   },
   getters: {},
   mutations: {
+    addTask(state,item) {
+      let list = [...state.cloud._Queue];
+      list.push(item)
+      state.cloud._Queue = list
+    },
+    setMainWindowId(state,id) {
+      state.windows.id = id
+    },
     minimizeOrMaximize(state, max) {
       state.windows.maximize = max
     },

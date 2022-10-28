@@ -88,7 +88,8 @@ const getFileInfo = (info) => {
 const uploadCalling = () => {
   electron.ipcRenderer.send("uploadOrDownload",JSON.stringify({
       path:store.state.cloud.url,
-      behavior: 'upload'
+      behavior: 'upload',
+      mainWindowId: store.state.windows.id,
   }));
 }
 const dblclickHandle = (item) => {

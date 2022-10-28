@@ -166,7 +166,8 @@ app.whenReady().then(() => {
   })
   ipcMain.on('uploadOrDownload',function (event,data) { 
     const path = '/' + JSON.parse(data).path 
-    const url = host + '/' + 'upload?path=' + path
+    const mainWindowId = JSON.parse(data).mainWindowId
+    const url = host + '/' + 'upload?path=' + path + '&mainWindowId=' + mainWindowId
     const config = {
       maxHeight:600,
       maxWidth:500,

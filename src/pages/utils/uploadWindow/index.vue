@@ -1,43 +1,62 @@
 <script setup>
 import Header from "./components/pageHeader.vue";
-import { ref, watch } from "vue";
+import { ref, watch, reactive, toRaw } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
+import electron from "electron";
+const remote = require("@electron/remote");
 const store = useStore();
 const route = useRoute();
 const filePath = "upload_" + route.query.path;
 const cdn = "https://cdn.lili-secretbase.com/";
 const COS = require("cos-nodejs-sdk-v5");
 const upload = ref();
+const headerRef = ref();
 const fileList = ref([]);
 const cos = new COS({
   SecretId: store.state.cloud.SecretId,
   SecretKey: store.state.cloud.SecretKey,
 });
-const handlePreview = () => {
-  console.log(upload);
-  console.log(fileList);
-};
-const uploadHandle = () => {
-  console.log(fileList.value);
-};
-watch(fileList, (oldValue, newValue) => {
-  console.log(fileList.value);
+electron.ipcRenderer.on("uploadResponse",(event, arg) => {
+  console.log(JSON.parse(arg))
+  previewEventHandle(0)
 });
+const uploadHandle = () => {
+  let list = []
+  fileList._value.map((file)=>{
+    list.push({
+      filePath: file.raw.path,
+      fileSize: file.raw.size,
+    })
+  })
+  electron.ipcRenderer.sendTo(
+    parseInt(route.query.mainWindowId),
+    "upload",
+    JSON.stringify(list)
+  );
+};
+const previewEventHandle = (type) => {
+  electron.ipcRenderer.send(
+    "assistantWindowEvent",
+    JSON.stringify({
+      id: filePath,
+      type: type,
+    })
+  );
+};
 </script>
 
 <template>
   <div class="PrimaryContainer">
     <el-header class="Header">
-      <Header :filePath="filePath" />
+      <Header :filePath="filePath" :previewEventHandle="previewEventHandle" />
     </el-header>
     <el-container class="SecondaryContainer">
       <el-upload
         ref="upload"
         v-model:file-list="fileList"
-        :on-success="handlePreview"
         class="upload-area"
-        drag
+        :drag="true"
         action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
         multiple
         :auto-upload="false"
@@ -49,7 +68,7 @@ watch(fileList, (oldValue, newValue) => {
           <div class="el-upload__text">点击或者拖动进行上传</div>
         </div>
         <!-- <template #tip>
-          <div class="el-upload__tip">
+          <div class="el-upload__tip"> 
             jpg/png files with a size less than 500kb
           </div>
         </template> -->

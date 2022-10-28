@@ -5,23 +5,21 @@ import { useStore } from "vuex";
 import electron from "electron";
 import { useRouter, useRoute } from "vue-router";
 import { getCurrentWebContents } from "@electron/remote";
+
 const webContent = getCurrentWebContents();
-console.log(webContent)
 const route = useRoute();
 const store = useStore();
-
 const dialogVisible = ref(false);
 const isMaximized = ref(false);
 const props = defineProps({
   filePath: String,
+  previewEventHandle: Function,
 });
 
 const previewEventHandle = (type) => {
-  electron.ipcRenderer.send("assistantWindowEvent",JSON.stringify({
-      id:props.filePath,
-      type:type,
-    }));
+  props.previewEventHandle(type)
 };
+
 </script>
 
 <template>
@@ -29,9 +27,7 @@ const previewEventHandle = (type) => {
     <div style="width: 150px">
       <img src="@/assets/flower_white.png" alt="" class="logo" />
     </div>
-    <div class="dragArea">
-      
-    </div>
+    <div class="dragArea"></div>
     <ul class="btns">
       <li @click="previewEventHandle(1)">
         <el-icon><Minus /></el-icon>

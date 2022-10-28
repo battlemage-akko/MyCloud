@@ -27,3 +27,4 @@ export const  bytesToSize = (bytes) => {
     i = Math.floor(Math.log(bytes) / Math.log(k));
     return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
 }
+

@@ -15,7 +15,7 @@ const cos = new COS({
   SecretId: store.state.cloud.SecretId,
   SecretKey: store.state.cloud.SecretKey,
 });
-console.log(route.params.type);
+
 </script>
 
 <template>
