@@ -2,6 +2,7 @@
 import { ref, watch } from "vue";
 import { useStore } from "vuex";
 import Progress from './components/progress.vue'
+import DoneList from './components/doneList.vue'
 
 const activeIndex = ref("1");
 const store = useStore();
@@ -30,6 +31,7 @@ watch(store.state.cloud._Queue, (oldValue, newValue) => {
         <el-menu-item index="1" class="menu-item">已完成</el-menu-item>
         <el-menu-item index="2" class="menu-item">失败</el-menu-item>
       </el-menu>
+      <DoneList />
     </el-aside>
     <el-main class="main">
       <Progress :_queue=props._queue />

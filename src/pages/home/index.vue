@@ -67,8 +67,15 @@ electron.ipcRenderer.on("upload", (event, arg) => {
           function (err, data) {
             console.log(err || data);
             if(data.statusCode === 200){
-              item.status = 'done'
-              console.log(_queue.indexOf(file))
+              file.status = 'done'
+              store.commit('pushDoneList',{
+                fileName: file.fileName,
+                filePath: file.filePath,
+                fileSize: file.fileSize,
+                fileType: file.fileType,
+                taskType: file.taskType
+              })
+              _queue.splice(_queue.indexOf(file),1)
             }
           }
         );

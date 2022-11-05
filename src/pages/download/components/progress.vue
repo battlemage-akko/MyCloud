@@ -17,7 +17,8 @@ import {
 } from "@element-plus/icons-vue";
 import iconDict from "@/utils/icon.json";
 import { bytesToSize } from "@/utils";
-import store from "../../../store";
+import { useStore } from "vuex";
+const store = useStore();
 const props = defineProps({
   _queue: Array,
 });
@@ -26,6 +27,7 @@ const getIcon = (path) => {
   const suffixName = path.substring(index);
   for (const key of Object.keys(suffix)) {
     if (suffix[key].indexOf(suffixName) != -1) {
+      console.log(key)
       return key;
     }
   }
