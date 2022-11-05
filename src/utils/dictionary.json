@@ -1,5 +1,5 @@
 {
     "video": [".mp4", ".avi", ".mov"],
-    "picture": [".jpg", ".png", ".svg", ".gif"],
+    "picture": [".jpg",".jpeg", ".png", ".svg", ".gif"],
     "doc": [".js", ".css", ".less", ".ts", ".scss", ".sass", ".conf"]
 }

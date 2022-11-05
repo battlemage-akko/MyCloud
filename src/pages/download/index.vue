@@ -1,13 +1,16 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useStore } from "vuex";
+import Progress from './components/progress.vue'
+
 const activeIndex = ref("1");
 const store = useStore();
 const props = defineProps({
   cos: Object,
+  _queue: Array,
 });
 const test = () => {
-  console.log(store.state.cloud)
+  console.log(store.state.cloud._Queue)
 }
 watch(store.state.cloud._Queue, (oldValue, newValue) => {
   console.log(store.state.cloud._Queue);
@@ -29,25 +32,25 @@ watch(store.state.cloud._Queue, (oldValue, newValue) => {
       </el-menu>
     </el-aside>
     <el-main class="main">
-      <el-button @click="test()"></el-button>
+      <Progress :_queue=props._queue />
     </el-main>
   </el-container>
 </template>
 
-<style lang='less'>
+<style lang='less' scoped>
 .container {
   padding: 20px;
   .aside {
     width: 250px;
     background-color: white;
     border-right: 1px solid fade(@color2, 25%);
-    max-width: 300px;
+    max-width: 250px;
     .menu {
       width: 100%;
       position: relative;
       .menu-item {
         width: 50%;
-        height: 40px;
+        height: 45px;
         &:focus {
           background-color: transparent !important;
         }
@@ -61,6 +64,7 @@ watch(store.state.cloud._Queue, (oldValue, newValue) => {
   .main {
     width: 75%;
     background-color: white;
+    padding: 0px;
   }
 }
 </style>

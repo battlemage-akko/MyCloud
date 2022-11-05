@@ -18,7 +18,6 @@ const cos = new COS({
   SecretKey: store.state.cloud.SecretKey,
 });
 electron.ipcRenderer.on("uploadResponse",(event, arg) => {
-  console.log(JSON.parse(arg))
   previewEventHandle(0)
 });
 const uploadHandle = () => {
@@ -27,6 +26,10 @@ const uploadHandle = () => {
     list.push({
       filePath: file.raw.path,
       fileSize: file.raw.size,
+      uploadPath: route.query.path,
+      fileName: file.raw.name,
+      fileType: file.raw.type,
+      taskType: 'Upload',
     })
   })
   electron.ipcRenderer.sendTo(

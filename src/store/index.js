@@ -12,7 +12,7 @@ const store = createStore({
   state: {
     windows: {
       maximize: false,
-      id:null,
+      id: null,
     },
     cloud: {
       cdn: 'https://cdn.lili-secretbase.com/',
@@ -22,20 +22,17 @@ const store = createStore({
       Region: "ap-nanjing",
       url: '',
       urlSplit: [],
-      doneList:[],
-      failList:[],
-      _Queue: [],
+      doneList: [],
+      failList: [],
+      uploadTotal: 0,
+      uploadLoaded: 0,
+      downloadTotal: 0,
     },
 
   },
   getters: {},
   mutations: {
-    addTask(state,item) {
-      let list = [...state.cloud._Queue];
-      list.push(item)
-      state.cloud._Queue = list
-    },
-    setMainWindowId(state,id) {
+    setMainWindowId(state, id) {
       state.windows.id = id
     },
     minimizeOrMaximize(state, max) {
@@ -53,6 +50,18 @@ const store = createStore({
         })
       }
       store.state.cloud.urlSplit = urlSplitArray
+    },
+    addUploadTotal(state,size){
+      state.cloud.uploadTotal += size
+    },
+    reduceUploadTotal(state,size){
+      state.cloud.uploadTotal -= size
+    },
+    addUploadLoaded (state,size){
+      state.cloud.uploadLoaded += size
+    },
+    pushDoneList(state,item){
+      state.cloud.doneList.push(item)
     }
   },
   actions: {},

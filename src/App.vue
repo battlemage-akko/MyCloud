@@ -10,8 +10,6 @@
 @import '@/style/common.less';
 .tips {
     padding: 7px !important;
-    right: 30px !important;
-    bottom: 30px !important;
     max-width: 200px !important;
     border-radius: 0px !important;
     background: @Header !important;
