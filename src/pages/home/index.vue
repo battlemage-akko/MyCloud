@@ -13,12 +13,22 @@ const webContent = getCurrentWebContents();
 const store = useStore();
 const _queue = reactive([]);
 const fs = require("fs");
+// const sequelize = new Sequelize('database', 'username', 'password',  {
+//   host: 'localhost',    
+//   port:'3306',
+//   dialect: 'mysql',
+//   pool: {  
+//     max: 5, 
+//     min: 0, 
+//     idle: 10000
+//   },
+//  });
 const COS = require("cos-nodejs-sdk-v5");
 const cos = new COS({
   SecretId: store.state.cloud.SecretId,
   SecretKey: store.state.cloud.SecretKey,
 });
-
+const { Sequelize } = require('sequelize');
 const globalTips = (message, type) => {
   ElNotification({
     customClass: "tips",
