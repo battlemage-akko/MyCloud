@@ -27,7 +27,7 @@ const getIcon = (path) => {
   const suffixName = path.substring(index);
   for (const key of Object.keys(suffix)) {
     if (suffix[key].indexOf(suffixName) != -1) {
-      console.log(key)
+      console.log(key);
       return key;
     }
   }
@@ -108,7 +108,7 @@ const uploadHandle = (item) => {
           </div>
         </div>
         <el-progress
-          :percentage="item.uploadPercent*100"
+          :percentage="item.uploadPercent * 100"
           color="#352f44"
           :show-text="false"
           style="width: 100%"

@@ -8,6 +8,7 @@ const settingComponents = reactive({
   app: appSetting,
 });
 const switchOption = (myChoice) => {
+  console.log(myChoice)
   Option.value = myChoice;
 };
 const switchDetail = (myChoice) => {
@@ -28,12 +29,12 @@ onMounted(() => {
 <template>
   <el-container id="settingApp">
     <el-aside width="151px">
-      <el-menu default-active="1" class="settingMenus">
-        <el-menu-item index="1" @click="switchOption('profile')">
+      <el-menu default-active="profile" class="settingMenus">
+        <el-menu-item index="profile" @click="switchOption('profile')">
           <el-icon><UserFilled /></el-icon>
           <span>个人信息</span>
         </el-menu-item>
-        <el-menu-item index="2" @click="switchOption('app')">
+        <el-menu-item index="" @click="switchOption('app')">
           <el-icon><document /></el-icon>
           <span>APP设置</span>
         </el-menu-item>

@@ -102,6 +102,16 @@ const uploadCalling = () => {
     })
   );
 };
+const downloadCalling = () => {
+  electron.ipcRenderer.send(
+    "uploadOrDownload",
+    JSON.stringify({
+      path: store.state.cloud.url,
+      behavior: "download",
+      mainWindowId: store.state.windows.id,
+    })
+  );
+}
 const dblclickHandle = (item) => {
   if (item.type == "dir") {
     emit("enterDir", item.url);
@@ -195,6 +205,7 @@ watch(chooseAll, (newValue, oldValue) => {
           style="margin: 10px 5px"
           :icon="Download"
           :disabled="chosenFiles.length <= 0"
+          @click="downloadCalling()"
           >下载</el-button
         >
         <el-button

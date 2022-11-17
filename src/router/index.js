@@ -9,7 +9,8 @@ import Cloud from '@/pages/cloud/index.vue'
 import Preview from '@/pages/utils/previewWindow/index.vue'
 import Download from '@/pages/download/index.vue'
 import Spider from '@/pages/spider/index.vue'
-import Upload from '@/pages/utils/uploadWindow/index.vue'
+import UploadWindow from '@/pages/utils/uploadWindow/index.vue'
+import DownloadWindow from '@/pages/utils/downloadWindow/index.vue'
 const routes = [
   {
     path:'/',
@@ -57,7 +58,12 @@ const routes = [
   {
     path: '/upload',
     name: 'upload',
-    component: Upload
+    component: UploadWindow,
+  },
+  {
+    path: '/download',
+    name: 'downloadWindow',
+    component: DownloadWindow,
   },
 ]
 
